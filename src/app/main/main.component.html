@@ -1,0 +1,113 @@
+<div class="container">
+        
+    <div id="log" *ngIf="hastoken">
+        <button type="button" class="btn btn-dark" (click)="logout()">Logout</button>
+    </div>
+    <div id="log" *ngIf="!hastoken">
+        <a href="/login">
+            <button type="button" class="btn btn-secondary">Login</button>
+        </a>
+    </div>
+
+    <div id="welcome">
+        <h1>Welcome to <strong>CarHub!</strong></h1>
+    </div>
+
+
+    <form >
+        <img src="assets/user.png">
+
+        <h3>User info</h3>
+        <input type="text" placeholder="First name" class="form-control" name="firstName" [(ngModel)] = "user.firstName" required>
+        <input type="text" placeholder="Last name" class="form-control" name="lastName" [(ngModel)] = "user.lastName">
+        <input type="text" placeholder="Email" class="form-control" name="email" [(ngModel)] = "user.email">
+        <input type="date" placeholder="Birthday" class="form-control" name="birthday" [(ngModel)] = "user.birthday">
+        <input type="text" placeholder="Login" class="form-control" name="login" [(ngModel)] = "user.login">
+        <input type="text" placeholder="Password" class="form-control" name="password" [(ngModel)] = "user.password">
+        <input type="text" placeholder="Phone" class="form-control" name="phone" [(ngModel)] = "user.phone">
+    <hr/>
+    <div *ngIf="userCarinfo">
+        <div *ngFor="let car of user.cars">
+            <input type="number" placeholder="Car year" class="form-control" name="year" [(ngModel)] = "car.year">
+            <input type="text" placeholder="License Plate" class="form-control" name="licensePlate" [(ngModel)] = "car.licensePlate">
+            <input type="text" placeholder="Model" class="form-control" name="model" [(ngModel)] = "car.model">
+            <input type="text" placeholder="Color" class="form-control" name="color" [(ngModel)] = "car.color">
+        </div>
+    </div>
+
+        <input type="button" value="Save" class="btn btn-primary" *ngIf="btnSave" (click)="saveUser()">
+        <input type="button" value="Update" class="btn btn-warning" *ngIf="!btnSave" (click)="updateUser()">
+        <input type="button" value="Remove" class="btn btn-danger" *ngIf="!btnSave" (click)="removeUser()">
+        <input type="button" value="Cancel" class="btn btn-secondary" *ngIf="!btnSave" (click)="callofUser()" >
+    </form>
+
+    <table class="table" *ngIf="table">
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Birthday</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Phone</th>
+            <th>Update</th>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let u of users; index as i">
+                <td>{{u.firstName+' '+u.lastName}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.birthday}}</td>
+                <td>{{u.login}}</td>
+                <td>{{u.password}}</td>
+                <td>{{u.phone}}</td>
+                <td><button class="btn btn-success" (click)="findUser(i)">Select</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="divCar" *ngIf="!hastoken">
+        <img src="assets/carhub.png">
+        <h4>Make <a href="/login">login</a> to get access to car info</h4>
+    </div>
+
+    <div id="divCar" *ngIf="hastoken">
+
+        <img src="assets/carhub.png">
+        <h3>Car info</h3>
+
+        <form >
+            <input type="number" placeholder="Year" class="form-control" name="year" [(ngModel)] = "car.year" required>
+            <input type="text" placeholder="License plate" class="form-control" name="licensePlate" [(ngModel)] = "car.licensePlate">
+            <input type="text" placeholder="Model" class="form-control" name="model" [(ngModel)] = "car.model">
+            <input type="text" placeholder="Color" class="form-control" name="color" [(ngModel)] = "car.color">
+    
+            <input type="button" value="Save" class="btn btn-primary" *ngIf="btnSaveCar" (click)="saveCar()">
+            <input type="button" value="Update" class="btn btn-warning" *ngIf="!btnSaveCar" (click)="updateCar()">
+            <input type="button" value="Remove" class="btn btn-danger" *ngIf="!btnSaveCar"(click)="removeCar()">
+            <input type="button" value="Cancel" class="btn btn-secondary" *ngIf="!btnSaveCar" (click)="callofCar()" >
+        </form>
+
+        <table class="table" *ngIf="tableCar">
+            <thead>
+                <th>Year</th>
+                <th>License plate</th>
+                <th>Model</th>
+                <th>Color</th>
+                <th>User</th>
+                <th>Select</th>
+            </thead>
+    
+            <tbody>
+                <tr *ngFor="let c of cars; index as i">
+                    <td>{{c.year}}</td>
+                    <td>{{c.licensePlate}}</td>
+                    <td>{{c.model}}</td>
+                    <td>{{c.color}}</td>
+                    <td>{{c.user.firstName+' '+c.user.lastName }}</td>
+                    <td><button class="btn btn-success" (click)="findCar(i)">Select</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
